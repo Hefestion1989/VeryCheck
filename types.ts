@@ -1,18 +1,12 @@
-export enum Verdict {
-  TRUE = 'TRUE',
-  FALSE = 'FALSE',
-  UNCERTAIN = 'UNCERTAIN',
-  MISLEADING = 'MISLEADING',
-}
-
-export interface Source {
-  title: string;
-  uri: string;
+export interface FactCheckCitation {
+  titulo?: string;
+  url: string;
 }
 
 export interface FactCheckResult {
-  verdict: Verdict;
-  explanation: string;
-  sources: Source[];
-  percentage: number;
+  veredicto: "verdadero" | "falso" | "engañoso" | "indeterminado";
+  confianza: number; // 0..1
+  explicacion: string;
+  citas: FactCheckCitation[];
+  claim_normalizado: string;
 }

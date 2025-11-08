@@ -1,5 +1,5 @@
 {
-  "name": "Copy of Verificador de Hechos con IA",
+  "name": "VeryCheck",
   "description": "Una aplicación sencilla para verificar la veracidad de la información utilizando la IA de Gemini con fuentes verificables y oficiales. Simplemente introduce una afirmación y obtén un análisis rápido.",
   "requestFramePermissions": []
 }

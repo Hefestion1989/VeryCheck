@@ -4,6 +4,13 @@ import { FactCheckResult } from './types';
 import Header from './components/Header';
 import Loader from './components/Loader';
 import ResultCard from './components/ResultCard';
+import Footer from './components/Footer';
+
+const exampleQueries = [
+  "La Gran Muralla China es visible desde el espacio.",
+  "El agua de la canilla en CABA tiene demasiado cloro.",
+  "El té de jengibre previene los resfriados."
+];
 
 const App: React.FC = () => {
   const [query, setQuery] = useState<string>('');
@@ -35,6 +42,11 @@ const App: React.FC = () => {
     }
   }, [query]);
   
+  const handleExampleClick = (exampleQuery: string) => {
+    setQuery(exampleQuery);
+    if(error) setError(null);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -89,6 +101,24 @@ const App: React.FC = () => {
           </div>
         </div>
 
+        {!isLoading && !result && !error && (
+          <div className="mt-8 text-center animate-fade-in">
+              <p className="text-slate-400 mb-3 text-sm">O prueba con un ejemplo:</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                  {exampleQueries.map((example, index) => (
+                      <button
+                          key={index}
+                          onClick={() => handleExampleClick(example)}
+                          className="px-4 py-2 bg-slate-700 text-slate-300 rounded-full text-sm hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 focus:ring-offset-slate-900 transition-colors disabled:opacity-50"
+                          disabled={isLoading}
+                      >
+                          {example}
+                      </button>
+                  ))}
+              </div>
+          </div>
+        )}
+
         <div className="mt-8">
           {isLoading && <Loader />}
           {error && (
@@ -100,9 +130,7 @@ const App: React.FC = () => {
           {result && <ResultCard result={result} />}
         </div>
       </main>
-      <footer className="text-center p-4 text-sm text-slate-500">
-        Potenciado por la API de Google Gemini.
-      </footer>
+      <Footer />
     </div>
   );
 };
