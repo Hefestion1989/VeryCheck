@@ -1,20 +1,38 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# VeryCheck 🔍  
+_Verificador de hechos con IA (Gemini + React)_
 
-# Run and deploy your AI Studio app
+![Status](https://img.shields.io/badge/status-beta-blue)
+![Stack](https://img.shields.io/badge/stack-React%20%7C%20Vite%20%7C%20TypeScript%20%7C%20Tailwind-orange)
+![AI](https://img.shields.io/badge/AI-Gemini%201.5%20Pro-9cf)
+![Deploy](https://img.shields.io/badge/Cloud-Google%20Run-brightgreen)
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/drive/1iXOgFC1QpqCYZjY7Lq-0gqkk_9YrInzf
+## 🚀 Demo en vivo
 
-## Run Locally
+👉 [https://verycheck-676062574925.us-west1.run.app/](https://verycheck-676062574925.us-west1.run.app/)
 
-**Prerequisites:**  Node.js
+---
 
+## 🧠 Descripción
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**VeryCheck** es una aplicación experimental de verificación de hechos (“fact-checking”) desarrollada por **Damián Gómez** como proyecto personal.  
+Utiliza la API de **Google Gemini 1.5 Pro** para analizar afirmaciones o textos noticiosos y devolver un veredicto con evidencia verificable.
+
+El sistema genera, para cada afirmación:
+
+- Un **veredicto**: `verdadero | falso | engañoso | indeterminado`
+- Un nivel de **confianza** (0–1)
+- Una **explicación breve**
+- Una lista de **fuentes citadas** (URLs verificables)
+
+> 🧪 Esta app es un prototipo educativo y no reemplaza el trabajo de periodistas o verificadores profesionales.
+
+---
+
+## 🖼️ Captura
+
+> Agregá un archivo `screenshot.png` aquí en la raíz del repo y GitHub mostrará la vista previa automáticamente.
+
+```markdown
+![VeryCheck screenshot](./screenshot.png)
