@@ -30,9 +30,3 @@ El sistema genera, para cada afirmación:
 
 ---
 
-## 🖼️ Captura
-
-> Agregá un archivo `screenshot.png` aquí en la raíz del repo y GitHub mostrará la vista previa automáticamente.
-
-```markdown
-![VeryCheck screenshot](./screenshot.png)
