@@ -1,32 +1,43 @@
-# VeryCheck 🔍  
-_Verificador de hechos con IA (Gemini + React)_
+# VeryCheck
+
+Verificador de hechos experimental con IA, construido con React, Vite, TypeScript, Tailwind y Gemini.
 
 ![Status](https://img.shields.io/badge/status-beta-blue)
 ![Stack](https://img.shields.io/badge/stack-React%20%7C%20Vite%20%7C%20TypeScript%20%7C%20Tailwind-orange)
-![AI](https://img.shields.io/badge/AI-Gemini%201.5%20Pro-9cf)
-![Deploy](https://img.shields.io/badge/Cloud-Google%20Run-brightgreen)
+![AI](https://img.shields.io/badge/AI-Gemini-brightgreen)
 
----
+## Demo
 
-## 🚀 Demo en vivo
+[verycheck-676062574925.us-west1.run.app](https://verycheck-676062574925.us-west1.run.app/)
 
-👉 [https://verycheck-676062574925.us-west1.run.app/](https://verycheck-676062574925.us-west1.run.app/)
+## Proposito
 
----
+VeryCheck analiza afirmaciones o textos noticiosos y devuelve una evaluacion estructurada con explicacion y fuentes. Es un proyecto personal de Damian Gomez para explorar herramientas de verificacion asistida por IA.
 
-## 🧠 Descripción
+El sistema genera, para cada afirmacion:
 
-**VeryCheck** es una aplicación experimental de verificación de hechos (“fact-checking”) desarrollada por **Damián Gómez** como proyecto personal.  
-Utiliza la API de **Google Gemini 1.5 Pro** para analizar afirmaciones o textos noticiosos y devolver un veredicto con evidencia verificable.
+- Veredicto: `verdadero`, `falso`, `enganoso` o `indeterminado`.
+- Confianza estimada.
+- Explicacion breve.
+- Fuentes citadas cuando estan disponibles.
 
-El sistema genera, para cada afirmación:
+## Estado del proyecto
 
-- Un **veredicto**: `verdadero | falso | engañoso | indeterminado`
-- Un nivel de **confianza** (0–1)
-- Una **explicación breve**
-- Una lista de **fuentes citadas** (URLs verificables)
+Beta experimental. Sirve como prototipo educativo y como pieza de portfolio; no reemplaza el trabajo de periodistas, verificadores profesionales ni fuentes oficiales.
 
-> 🧪 Esta app es un prototipo educativo y no reemplaza el trabajo de periodistas o verificadores profesionales.
+## Stack
 
----
+- React + Vite
+- TypeScript
+- Tailwind CSS
+- Gemini API
+- Google Cloud Run
 
+## Uso local
+
+```bash
+npm install
+npm run dev
+```
+
+Para usar la integracion con Gemini, configura la clave de API segun las variables de entorno esperadas por el proyecto. No publiques archivos `.env` ni claves privadas.
