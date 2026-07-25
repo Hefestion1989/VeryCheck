@@ -6,6 +6,8 @@ Verificador de hechos experimental con IA, construido con React, Vite, TypeScrip
 ![Stack](https://img.shields.io/badge/stack-React%20%7C%20Vite%20%7C%20TypeScript%20%7C%20Tailwind-orange)
 ![AI](https://img.shields.io/badge/AI-Gemini-brightgreen)
 
+**Demo publica:** [hefestion1989.github.io/VeryCheck](https://hefestion1989.github.io/VeryCheck/)
+
 ## Proposito
 
 VeryCheck analiza afirmaciones o textos noticiosos y devuelve una evaluacion estructurada con explicacion, nivel de confianza y fuentes cuando estan disponibles.
@@ -26,7 +28,9 @@ Para cada afirmacion, el sistema busca producir:
 
 Beta experimental. Sirve como prototipo educativo y pieza de portfolio; no reemplaza el trabajo de periodistas, verificadores profesionales ni fuentes oficiales.
 
-La demo publica en Cloud Run queda en revision. Mientras tanto, el proyecto puede evaluarse desde el codigo y ejecutarse localmente.
+La demo se publica automaticamente en GitHub Pages desde la rama `main`. Para realizar consultas, cada visitante ingresa su propia API key de Gemini.
+
+El repositorio debe usar **Settings > Pages > Source: GitHub Actions**. A partir de ahi, cada cambio integrado en `main` se valida y despliega mediante el workflow incluido.
 
 ## Stack
 
@@ -34,13 +38,19 @@ La demo publica en Cloud Run queda en revision. Mientras tanto, el proyecto pued
 - TypeScript
 - Tailwind CSS
 - Gemini API
-- Google Cloud Run
+- GitHub Pages
 
 ## Uso local
 
 ```bash
 npm install
 npm run dev
+```
+
+Para validar una modificacion antes de publicarla:
+
+```bash
+npm run check
 ```
 
 Al abrir la aplicacion, pega una API key de Gemini en el campo correspondiente. La clave se conserva solo en memoria mientras la pestana esta abierta: no se guarda en el repositorio, en un archivo `.env` ni en el almacenamiento del navegador.
