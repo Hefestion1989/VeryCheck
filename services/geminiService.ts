@@ -43,11 +43,12 @@ Procedimiento:
 /**
  * Performs a fact-check using Gemini with a stable, structured output.
  */
-export async function factCheckWithGemini(userInput: string): Promise<FactCheckResult> {
-  if (!process.env.API_KEY) {
-    throw new Error("API_KEY is not set in environment variables.");
+export async function factCheckWithGemini(userInput: string, apiKey: string): Promise<FactCheckResult> {
+  const trimmedApiKey = apiKey.trim();
+  if (!trimmedApiKey) {
+    throw new Error("Ingresá una API key de Gemini para verificar.");
   }
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: trimmedApiKey });
 
   const prompt = `${SUPER_PROMPT}\n\nClaim del usuario:\n"""${userInput.trim()}"""\n\nDevolvé SOLO el JSON.`;
   
@@ -57,9 +58,10 @@ export async function factCheckWithGemini(userInput: string): Promise<FactCheckR
       contents: prompt,
       config: {
         temperature: 0.25,
-        maxOutputTokens: 8192, // Increased token limit to max to prevent premature cutoff
+        maxOutputTokens: 8192,
         responseMimeType: "application/json",
         responseSchema: responseSchema,
+        tools: [{ googleSearch: {} }],
       },
     });
 

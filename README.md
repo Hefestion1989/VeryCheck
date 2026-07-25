@@ -20,6 +20,7 @@ Para cada afirmacion, el sistema busca producir:
 - Confianza estimada.
 - Explicacion breve del razonamiento.
 - Fuentes citadas cuando estan disponibles.
+- Busqueda de Google integrada mediante Gemini para contrastar informacion actual.
 
 ## Estado del proyecto
 
@@ -42,7 +43,9 @@ npm install
 npm run dev
 ```
 
-Para usar la integracion con Gemini, configura la clave de API segun las variables de entorno esperadas por el proyecto. No publiques archivos `.env` ni claves privadas.
+Al abrir la aplicacion, pega una API key de Gemini en el campo correspondiente. La clave se conserva solo en memoria mientras la pestana esta abierta: no se guarda en el repositorio, en un archivo `.env` ni en el almacenamiento del navegador.
+
+Como cualquier aplicacion web cliente, el navegador envia esa clave directamente a la API de Google. Para una publicacion con una clave administrada por el proyecto se necesita un backend que mantenga el secreto fuera del navegador.
 
 ## Relacion con el portfolio
 
