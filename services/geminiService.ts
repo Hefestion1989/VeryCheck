@@ -43,23 +43,63 @@ Procedimiento:
 /**
  * Performs a fact-check using Gemini with a stable, structured output.
  */
-export async function factCheckWithGemini(userInput: string): Promise<FactCheckResult> {
-  if (!process.env.API_KEY) {
-    throw new Error("API_KEY is not set in environment variables.");
+export async function factCheckWithGemini(userInput: string, apiKey: string): Promise<FactCheckResult> {
+  const trimmedApiKey = apiKey.trim();
+  if (!trimmedApiKey) {
+    throw new Error("Ingresá una API key de Gemini para verificar.");
   }
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: trimmedApiKey });
 
-  const prompt = `${SUPER_PROMPT}\n\nClaim del usuario:\n"""${userInput.trim()}"""\n\nDevolvé SOLO el JSON.`;
+  const researchPrompt = `${SUPER_PROMPT}
+
+Claim del usuario:
+"""${userInput.trim()}"""
+
+Investigá el claim con Google Search. Redactá una síntesis de la evidencia y priorizá las fuentes recuperadas por la herramienta.`;
   
   try {
+    const researchResponse = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: researchPrompt,
+      config: {
+        tools: [{ googleSearch: {} }],
+        temperature: 0.2,
+        maxOutputTokens: 4096,
+      },
+    });
+
+    const researchText = researchResponse.text?.trim();
+    if (!researchText) {
+      throw new Error("La búsqueda no devolvió evidencia para analizar.");
+    }
+
+    const groundedSources = (researchResponse.candidates?.[0]?.groundingMetadata?.groundingChunks || [])
+      .flatMap((chunk) => (chunk.web?.uri ? [{
+        titulo: chunk.web.title || chunk.web.uri,
+        url: chunk.web.uri,
+      }] : []));
+
+    const prompt = `${SUPER_PROMPT}
+
+Claim del usuario:
+"""${userInput.trim()}"""
+
+Evidencia obtenida mediante Google Search:
+${researchText}
+
+Fuentes recuperadas por la herramienta:
+${JSON.stringify(groundedSources)}
+
+Evaluá únicamente a partir de esta evidencia. Devolvé SOLO el JSON.`;
+
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-pro", // Using latest and recommended Pro model
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         temperature: 0.25,
-        maxOutputTokens: 8192, // Increased token limit to max to prevent premature cutoff
+        maxOutputTokens: 8192,
         responseMimeType: "application/json",
-        responseSchema: responseSchema,
+        responseSchema,
       },
     });
 

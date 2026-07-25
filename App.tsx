@@ -13,12 +13,17 @@ const exampleQueries = [
 ];
 
 const App: React.FC = () => {
+  const [apiKey, setApiKey] = useState<string>('');
   const [query, setQuery] = useState<string>('');
   const [result, setResult] = useState<FactCheckResult | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   
   const handleVerify = useCallback(async () => {
+    if (!apiKey.trim()) {
+      setError('Ingresá tu API key de Gemini. La clave no se guarda ni se incorpora al sitio.');
+      return;
+    }
     if (!query.trim()) {
       setError('Por favor, introduce texto o un enlace para verificar.');
       return;
@@ -29,7 +34,7 @@ const App: React.FC = () => {
     setResult(null);
 
     try {
-      const apiResult = await factCheckWithGemini(query);
+      const apiResult = await factCheckWithGemini(query, apiKey);
       setResult(apiResult);
     } catch (err) {
       if (err instanceof Error) {
@@ -40,7 +45,7 @@ const App: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [query]);
+  }, [apiKey, query]);
   
   const handleExampleClick = (exampleQuery: string) => {
     setQuery(exampleQuery);
@@ -56,6 +61,27 @@ const App: React.FC = () => {
           <p className="text-slate-400 mb-6">Pega aquí el texto de una noticia o un enlace (URL) para analizar su veracidad.</p>
           
           <div className="space-y-4">
+            <div>
+              <label htmlFor="api-key" className="block text-sm font-medium text-slate-300 mb-1">
+                API key de Gemini
+              </label>
+              <input
+                id="api-key"
+                type="password"
+                autoComplete="off"
+                className="w-full p-3 bg-slate-900 border border-slate-600 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-shadow placeholder-slate-500"
+                placeholder="Pegá tu clave para esta sesión"
+                value={apiKey}
+                onChange={(e) => {
+                  setApiKey(e.target.value);
+                  if (error) setError(null);
+                }}
+                disabled={isLoading}
+              />
+              <p className="text-xs text-slate-500 mt-2">
+                Se conserva sólo en la memoria de esta pestaña y se envía directamente a Google Gemini.
+              </p>
+            </div>
             <div>
               <label htmlFor="query" className="block text-sm font-medium text-slate-300 mb-1 sr-only">
                 Noticia o enlace a verificar
@@ -78,7 +104,7 @@ const App: React.FC = () => {
           <div className="mt-6">
             <button
               onClick={handleVerify}
-              disabled={isLoading || !query.trim()}
+              disabled={isLoading || !apiKey.trim() || !query.trim()}
               className="w-full flex items-center justify-center sm:w-auto px-6 py-3 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 focus:ring-offset-slate-800 disabled:bg-slate-600 disabled:cursor-not-allowed transition-all duration-300"
             >
               {isLoading ? (
