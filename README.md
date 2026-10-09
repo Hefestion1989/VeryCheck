@@ -60,3 +60,7 @@ Como cualquier aplicacion web cliente, el navegador envia esa clave directamente
 ## Relacion con el portfolio
 
 VeryCheck es uno de los proyectos principales del portfolio publico. El mapa general esta en [`portfolio-proyectos`](https://github.com/Hefestion1989/portfolio-proyectos).
+
+## Build para ChatGPT Sites
+
+`npm ci && npm run build:sites` genera `dist/` con rutas desde la raíz y metadatos de Sites. `npm run build` conserva las rutas de GitHub Pages. El build de Sites todavía usa Gemini y pide una API key a cada visitante; cambiar el proveedor y mejorar la verificación de fuentes son trabajos aparte. La publicación requiere vincular este repositorio a un proyecto de Sites.
